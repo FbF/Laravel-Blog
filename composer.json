@@ -1,0 +1,26 @@
+{
+    "name": "fbf/simple-blog",
+    "description": "",
+    "authors": [
+        {
+            "name": "Neil Crookes",
+            "email": "neil.crookes@fivebyfiveuk.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.x",
+        "thujohn/rss": "dev-master",
+        "cviebrock/eloquent-sluggable": "1.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/models"
+        ],
+        "psr-0": {
+            "Fbf\\SimpleBlog": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
