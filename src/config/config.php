@@ -70,4 +70,12 @@ return array(
 	 */
 	'results_per_page' => 4,
 
+	/**
+	 * Date format for published date, shown on posts.index and posts.view. Should be
+	 * a valid date() format string, e.g.
+	 *
+	 * @type string
+	 */
+	'published_date_format' => 'j\<\s\u\p\>S\<\/\s\u\p\> F \'y',
+
 );

@@ -15,7 +15,7 @@
 @section('content')
 	<div class="post">
 		<h2>{{ $post->title }}</h2>
-		<p class="date">{{ $post->published_date }}</p>
+		<p class="date">{{ date(Config::get('simple-blog::published_date_format'), strtotime($post->published_date)) }}</p>
 		@if (!empty($post->image))
 			<img src="/packages/fbf/simple-blog/details/{{ $post->image }}" alt="{{ $post->title }}" width="600" height="400" />
 		@endif

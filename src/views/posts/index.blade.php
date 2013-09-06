@@ -17,7 +17,7 @@
 		@foreach ($posts as $post)
 			<div class="post">
 				<h2><a href="/{{ Config::get('simple-blog::uri') }}/{{ $post->slug }}">{{ $post->title }}</a></h2>
-				<p class="date">{{ $post->published_date }}</p>
+				<p class="date">{{ date(Config::get('simple-blog::published_date_format'), strtotime($post->published_date)) }}</p>
 				@if (!empty($post->image))
 					<img src="/packages/fbf/simple-blog/thumbnails/{{ $post->image }}" alt="{{ $post->title }}" width="300" height="200" />
 				@endif

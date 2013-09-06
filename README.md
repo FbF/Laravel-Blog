@@ -76,6 +76,10 @@ The number of posts to show per page on the index
 
 	'results_per_page' => 4,
 
+Date format for published date, shown on posts.index and posts.view. Should be a valid date() format string, e.g.
+
+	'published_date_format' => 'j\<\s\u\p\>S\<\/\s\u\p\> F \'y',
+
 ## Administrator
 
 You can use the excellent Laravel Administrator package by frozennode to administer your blog.
