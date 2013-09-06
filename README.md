@@ -75,3 +75,11 @@ Determines whether to show the archives on the view page
 The number of posts to show per page on the index
 
 	'results_per_page' => 4,
+
+## Administrator
+
+You can use the excellent Laravel Administrator package by frozennode to administer your blog.
+
+http://administrator.frozennode.com/docs/installation
+
+A ready-to-use model config file for the Post model (posts.php) is provided in the src/config/administrator directory of the package, which you can copy into the app/config/administrator directory (or whatever you set as the model_config_path in the administrator config file).
