@@ -3,7 +3,7 @@
 use Fbf\SimpleBlog\Post;
 
 // e.g. http://domain.com/blog or http://domain.com/blog/yyyy/mm
-Route::get(Config::get('simple-blog::uri').'/{year?}/{month?}', function($year, $month)
+Route::get(Config::get('simple-blog::uri').'/{year?}/{month?}', function($year = null, $month = null)
 {
 
 	// Initiate query, don't paginate on it yet in case we want the year/month condition added
