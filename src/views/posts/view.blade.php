@@ -17,7 +17,7 @@
 		<h2>{{ $post->title }}</h2>
 		<p class="date">{{ $post->published_date }}</p>
 		@if (!empty($post->image))
-			<img src="/uploads/fbf_simple_blog/details/{{ $post->image }}" alt="{{ $post->title }}" width="600" height="400" />
+			<img src="/packages/fbf/simple-blog/details/{{ $post->image }}" alt="{{ $post->title }}" width="600" height="400" />
 		@endif
 		{{ $post->content }}
 	</div>

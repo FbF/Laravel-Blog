@@ -19,7 +19,7 @@
 				<h2><a href="/{{ Config::get('simple-blog::uri') }}/{{ $post->slug }}">{{ $post->title }}</a></h2>
 				<p class="date">{{ $post->published_date }}</p>
 				@if (!empty($post->image))
-					<img src="/uploads/fbf_simple_blog/thumbnails/{{ $post->image }}" alt="{{ $post->title }}" width="300" height="200" />
+					<img src="/packages/fbf/simple-blog/thumbnails/{{ $post->image }}" alt="{{ $post->title }}" width="300" height="200" />
 				@endif
 				<p>{{ $post->summary }}</p>
 			</div>
