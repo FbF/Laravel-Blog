@@ -83,9 +83,10 @@ return array(
 			'type' => 'wysiwyg',
 		),
 		'published_date' => array(
-			'type' => 'date',
 			'title' => 'Published Date',
-			'date_format' => 'yy-mm-dd',
+		    'type' => 'datetime',
+		    'date_format' => 'yy-mm-dd', //optional, will default to this value
+		    'time_format' => 'HH:mm',    //optional, will default to this value
 		),
 		'status' => array(
 			'type' => 'enum',
