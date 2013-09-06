@@ -79,7 +79,7 @@ return array(
 		    'height' => 130, //optional, defaults to 100
 		),
 		'content' => array(
-			'title' => 'Summary',
+			'title' => 'Content',
 			'type' => 'wysiwyg',
 		),
 		'published_date' => array(
