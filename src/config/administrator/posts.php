@@ -65,11 +65,11 @@ return array(
 			'title' => 'Image',
 			'type' => 'image',
 			'naming' => 'random',
-			'location' => public_path() . '/uploads/fbf_simple_blog/originals/',
+			'location' => public_path() . '/packages/fbf/simple-blog/originals/',
 			'size_limit' => 5,
 			'sizes' => array(
-				array(300, 200, 'crop', public_path() . '/uploads/fbf_simple_blog/thumbnails/', 100),
-				array(600, 400, 'crop', public_path() . '/uploads/fbf_simple_blog/details/', 100),
+				array(300, 200, 'crop', public_path() . '/packages/fbf/simple-blog/thumbnails/', 100),
+				array(600, 400, 'crop', public_path() . '/packages/fbf/simple-blog/details/', 100),
 			)
 		),
 		'summary' => array(
