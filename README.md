@@ -1,7 +1,7 @@
 Simple-Blog
 ===========
 
-A simple blog package for Laravel 4
+A Laravel 4 package to add a simple blog to a site
 
 ## Features
 

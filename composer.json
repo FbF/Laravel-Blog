@@ -1,6 +1,8 @@
 {
     "name": "fbf/simple-blog",
-    "description": "",
+    "description": "A Laravel 4 package to add a simple blog to a site",
+    "keywords": ["laravel","blog"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Neil Crookes",
