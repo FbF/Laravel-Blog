@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-	@if (!empty($posts))
+	@if (!$posts->isEmpty())
 		@foreach ($posts as $post)
 			<div class="post">
 				<h2><a href="/{{ Config::get('simple-blog::uri') }}/{{ $post->slug }}">{{ $post->title }}</a></h2>
