@@ -21,7 +21,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'model' => 'Fbf\SimpleBlog\Post',
+	'model' => 'Fbf\LaravelBlog\Post',
 
 	/**
 	 * The columns array
@@ -36,7 +36,8 @@ return array(
 			'title' => 'Published'
 		),
 		'status' => array(
-			'title' => 'Status'
+			'title' => 'Status',
+			'select' => "CASE (:table).status WHEN '".Fbf\LaravelBlog\Post::APPROVED."' THEN 'Approved' WHEN '".Fbf\LaravelBlog\Post::DRAFT."' THEN 'Draft' END",
 		),
 		'updated_at' => array(
 			'title' => 'Last Updated'
@@ -57,44 +58,54 @@ return array(
 			'title' => 'Slug',
 			'type' => 'text',
 			'visible' => function($model)
-			{
-				return $model->exists;
-			},
+				{
+					return $model->exists;
+				},
 		),
 		'image' => array(
 			'title' => 'Image',
 			'type' => 'image',
 			'naming' => 'random',
-			'location' => public_path() . '/packages/fbf/simple-blog/originals/',
+			'location' => public_path() . Config::get('laravel-blog::originals_dir'),
 			'size_limit' => 5,
 			'sizes' => array(
-				array(300, 200, 'crop', public_path() . '/packages/fbf/simple-blog/thumbnails/', 100),
-				array(600, 400, 'crop', public_path() . '/packages/fbf/simple-blog/details/', 100),
-			)
+				array(
+					Config::get('laravel-blog::thumbnail_image_width'),
+					Config::get('laravel-blog::thumbnail_image_height'),
+					'crop',
+					public_path() . Config::get('laravel-blog::thumbnails_image_dir'),
+					100
+				),
+				array(
+					Config::get('laravel-blog::details_image_max_width'),
+					Config::get('laravel-blog::details_image_max_height'),
+					'auto',
+					public_path() . Config::get('laravel-blog::details_image_dir'),
+					100
+				),
+			),
+		),
+		'image_alt' => array(
+			'title' => 'Image ALT text',
+			'type' => 'text',
+		),
+		'you_tube_video_id' => array(
+			'title' => 'YouTube Video ID (Takes precedence over the image if it\'s populated)',
+			'type' => 'text',
 		),
 		'summary' => array(
 			'title' => 'Summary',
 			'type' => 'textarea',
-		    'limit' => 300, //optional, defaults to no limit
-		    'height' => 130, //optional, defaults to 100
+			'limit' => 300, //optional, defaults to no limit
+			'height' => 130, //optional, defaults to 100
 		),
 		'content' => array(
 			'title' => 'Content',
 			'type' => 'wysiwyg',
 		),
-		'published_date' => array(
-			'title' => 'Published Date',
-		    'type' => 'datetime',
-		    'date_format' => 'yy-mm-dd', //optional, will default to this value
-		    'time_format' => 'HH:mm',    //optional, will default to this value
-		),
-		'status' => array(
-			'type' => 'enum',
-			'title' => 'Status',
-			'options' => array(
-				Fbf\SimpleBlog\Post::DRAFT => 'Draft',
-				Fbf\SimpleBlog\Post::APPROVED => 'Approved',
-			),
+		'in_rss' => array(
+			'title' => 'In RSS Feed?',
+			'type' => 'bool',
 		),
 		'meta_description' => array(
 			'title' => 'Meta Description',
@@ -104,9 +115,19 @@ return array(
 			'title' => 'Meta Keywords',
 			'type' => 'textarea',
 		),
-		'in_rss' => array(
-			'title' => 'In RSS Feed?',
-			'type' => 'bool',
+		'published_date' => array(
+			'title' => 'Published Date',
+			'type' => 'datetime',
+			'date_format' => 'yy-mm-dd', //optional, will default to this value
+			'time_format' => 'HH:mm',    //optional, will default to this value
+		),
+		'status' => array(
+			'type' => 'enum',
+			'title' => 'Status',
+			'options' => array(
+				Fbf\LaravelBlog\Post::DRAFT => 'Draft',
+				Fbf\LaravelBlog\Post::APPROVED => 'Approved',
+			),
 		),
 		'created_at' => array(
 			'title' => 'Created',
@@ -145,8 +166,8 @@ return array(
 			'type' => 'enum',
 			'title' => 'Status',
 			'options' => array(
-				Fbf\SimpleBlog\Post::DRAFT => 'Draft',
-				Fbf\SimpleBlog\Post::APPROVED => 'Approved',
+				Fbf\LaravelBlog\Post::DRAFT => 'Draft',
+				Fbf\LaravelBlog\Post::APPROVED => 'Approved',
 			),
 		),
 	),
@@ -174,8 +195,8 @@ return array(
 	 * @type function
 	 */
 	'link' => function($model)
-	{
-		return URL::to(Config::get('simple-blog::uri').'/'.$model->slug);
-	},
+		{
+			return $model->getUrl();
+		},
 
 );

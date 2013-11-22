@@ -1,5 +1,5 @@
 {
-    "name": "fbf/simple-blog",
+    "name": "fbf/laravel-blog",
     "description": "A Laravel 4 package to add a simple blog to a site",
     "keywords": ["laravel","blog"],
     "license": "MIT",
@@ -17,11 +17,12 @@
     },
     "autoload": {
         "classmap": [
+            "src/controllers",
             "src/migrations",
             "src/models"
         ],
         "psr-0": {
-            "Fbf\\SimpleBlog": "src/"
+            "Fbf\\LaravelBlog": "src/"
         }
     },
     "minimum-stability": "dev"

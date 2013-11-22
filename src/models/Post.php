@@ -1,25 +1,107 @@
-<?php namespace Fbf\SimpleBlog;
+<?php namespace Fbf\LaravelBlog;
 
-use Eloquent;
+class Post extends \Eloquent {
 
-class Post extends Eloquent {
-
+	/**
+	 * Status values for the database
+	 */
 	const DRAFT = 'DRAFT';
-
 	const APPROVED = 'APPROVED';
 
-	protected $table = 'fbf_simple_blog_posts';
+	/**
+	 * Name of the table to use for this model
+	 * @var string
+	 */
+	protected $table = 'fbf_blog_posts';
 
+	/**
+	 * @var bool
+	 */
+	protected $softDelete = true;
+
+	/**
+	 * Used for Cviebrock/EloquentSluggable
+	 * @var array
+	 */
 	public static $sluggable = array(
 		'build_from' => 'title',
 		'save_to' => 'slug',
+		'separator' => '-',
 		'unique' => true,
 	);
+
+	/**
+	 * Used to store the old image value, set during model updating event before the model is actually updated
+	 * Used to compare with the new main image value after saving the model, so we can work out whether we need to
+	 * recalculate the image width and height
+	 * @var string
+	 */
+	protected $oldImage = null;
+
+	/**
+	 *
+	 */
+	public static function boot()
+	{
+		parent::boot();
+
+		static::created(function($post)
+		{
+			// If the record is being created and there is an "image" supplied, set it's width and height
+			if (!empty($post->image))
+			{
+				$post->updateImageSize();
+			}
+		});
+
+		static::updating(function($post)
+		{
+			// If the record is about to be updated and there is a "image" supplied, get the current image
+			// value so we can compare it to the new one
+			$post->oldImage = self::where('id','=',$post->id)->first()->pluck('image');
+			return true;
+		});
+
+		static::updated(function($post)
+		{
+			// If the main image has changed, and the save was successful, update the database with the new width and height
+			if (isset($post->oldImage) && $post->oldImage <> $post->image)
+			{
+				$post->updateImageSize();
+			}
+		});
+
+	}
+
+	/**
+	 * Triggered from madel save events, it updates the main image width and height fields to the values of the
+	 * uploaded image.
+	 */
+	protected function updateImageSize()
+	{
+		// Get path to image
+		$pathToImage = public_path() . \Config::get('laravel-blog::details_image_dir') . $this->image;
+		if (is_file($pathToImage) && file_exists($pathToImage))
+		{
+			list($width, $height) = getimagesize($pathToImage);
+		}
+		else
+		{
+			$width = $height = null;
+		}
+		// Update the database, use DB::table()->update approach so as not to trigger the Eloquent save() event again.
+		\DB::table($this->getTable())
+			->where('id', $this->id)
+			->update(array(
+				'image_width' => $width,
+				'image_height' => $height,
+			));
+	}
 
 	public function scopeLive($query)
 	{
 		return $query->where('status', '=', Post::APPROVED)
-			->where('published_date', '<=', date('Y-m-d'));
+			->where('published_date', '<=', \Carbon\Carbon::now());
 	}
 
 	public static function archives()
@@ -45,5 +127,9 @@ class Post extends Eloquent {
 		return $results;
 	}
 
+	public function getUrl()
+	{
+		return \URL::action('Fbf\LaravelBlog\PostsController@view', array('slug' => $this->slug));
+	}
 
 }

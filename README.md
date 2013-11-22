@@ -1,5 +1,5 @@
-Simple-Blog
-===========
+Laravel Blog
+============
 
 A Laravel 4 package to add a simple blog to a site
 
@@ -16,7 +16,7 @@ A Laravel 4 package to add a simple blog to a site
 
 Add the following to you composer.json file
 
-    "fbf/simple-blog": "dev-master"
+    "fbf/laravel-blog": "dev-master"
 
 Run
 
@@ -24,15 +24,15 @@ Run
 
 Add the following to app/config/app.php
 
-    'Fbf\SimpleBlog\SimpleBlogServiceProvider'
+    'Fbf\LaravelBlog\LaravelBlogServiceProvider'
 
 Run the package migration
 
-    php artisan migrate --package=fbf/simple-blog
+    php artisan migrate --package=fbf/laravel-blog
 
 Publish the config
 
-    php artisan config:publish fbf/simple-blog
+    php artisan config:publish fbf/laravel-blog
 
 ## Configuration
 
