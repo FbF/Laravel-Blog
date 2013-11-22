@@ -127,4 +127,13 @@ return array(
 	 */
 	'details_image_max_height' => 450,
 
+	/**
+	 * YouTube Embed Player code used if a post has a You Tube Video ID set
+	 * instead of an Image. Changing the settings will apply to all pages that
+	 * have a You Tube Video on them. The placeholder "%YOU_TUBE_VIDEO_ID%" is
+	 * replaced with the You Tube Video ID in the database for this page.
+	 */
+	'you_tube_embed_code' => '<iframe width="560" height="315" src="//www.youtube.com/embed/%YOU_TUBE_VIDEO_ID%?rel=0" frameborder="0" allowfullscreen></iframe>',
+
+
 );

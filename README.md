@@ -34,6 +34,12 @@ Publish the config
 
     php artisan config:publish fbf/laravel-blog
 
+Create the relevant image upload directories that you specify in your config, e.g.
+
+    public/uploads/packages/fbf/laravel-blog/originals
+    public/uploads/packages/fbf/laravel-blog/thumbnails
+    public/uploads/packages/fbf/laravel-blog/details
+
 ## Configuration
 
 URI of the blog
