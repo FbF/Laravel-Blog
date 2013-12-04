@@ -127,9 +127,30 @@ class Post extends \Eloquent {
 		return $results;
 	}
 
+	/**
+	 * Returns the URL of the post
+	 * @return string
+	 */
 	public function getUrl()
 	{
 		return \URL::action('Fbf\LaravelBlog\PostsController@view', array('slug' => $this->slug));
+	}
+
+	/**
+	 * Returns the HTML img tag for the post's thumbnail image
+	 * @return null|string
+	 */
+	public function getThumbnailImage()
+	{
+		if (empty($this->image))
+		{
+			return null;
+		}
+		$html = '<img src="' . \Config::get('laravel-blog::thumbnails_image_dir') . $this->image . '"';
+		$html .= ' alt="' . $this->image_alt . '"';
+		$html .= ' width="' . \Config::get('laravel-blog::thumbnail_image_width') . '"';
+		$html .= ' height="' . \Config::get('laravel-blog::thumbnail_image_height') . '" />';
+		return $html;
 	}
 
 }

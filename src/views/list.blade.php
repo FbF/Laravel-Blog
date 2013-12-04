@@ -22,10 +22,7 @@
 				}}
 				</div>
 			@elseif (!empty($post->image))
-				<img src="{{ Config::get('laravel-blog::thumbnails_image_dir') }}{{ $post->image }}"
-				     alt="{{ $post->image_alt }}"
-				     width="{{ Config::get('laravel-blog::thumbnail_image_width') }}"
-				     height="{{ Config::get('laravel-blog::thumbnail_image_height') }}" />
+				{{ $post->getThumbnailImage() }}
 			@endif
 
 			<p>{{ $post->summary }}</p>
