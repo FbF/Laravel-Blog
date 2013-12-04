@@ -5,7 +5,7 @@
 		<div class="post">
 
 			<h2>
-				<a href="{{ $post->getUrl() }}">
+				<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
 					{{ $post->title }}
 				</a>
 			</h2>
@@ -16,16 +16,23 @@
 
 			@if (!empty($post->you_tube_video_id))
 				<div class="posts-index-youtube-thumb">
-				{{
-					str_replace('%YOU_TUBE_VIDEO_ID%', $post->you_tube_video_id,
-						Config::get('laravel-blog::you_tube_thumbnail_code'))
-				}}
+					<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+						{{ $post->getYouTubeThumbnailImage() }}
+					</a>
 				</div>
 			@elseif (!empty($post->image))
-				{{ $post->getThumbnailImage() }}
+				<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+					{{ $post->getThumbnailImage() }}
+				</a>
 			@endif
 
 			<p>{{ $post->summary }}</p>
+
+			<p>
+				<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+					{{ trans('laravel-blog::messages.list.more_link_text') }}
+				</a>
+			</p>
 
 		</div>
 
@@ -36,7 +43,7 @@
 @else
 
 	<p>
-		There aren't any posts at the moment.
+		{{ trans('laravel-blog::messages.list.no_posts') }}
 	</p>
 
 @endif

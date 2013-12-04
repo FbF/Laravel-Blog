@@ -50,6 +50,13 @@ return array(
 	'show_adjacent_posts_on_view' => true,
 
 	/**
+	 * Determines whether to show the share partial on the post view page
+	 *
+	 * @type bool
+	 */
+	'show_share_partial_on_view' => true,
+
+	/**
 	 * Determines whether to show the archives on the index page
 	 *
 	 * @type bool
@@ -83,14 +90,14 @@ return array(
 	 * app, and inside your own view you can @include the various elements in the package
 	 * or you can use this one provided, but there's no layout or anything.
 	 */
-	'index_view' => 'laravel-blog::index',
+	'index_view' => 'laravel-blog::posts.index',
 
 	/**
 	 * The view to use for the post detail page. You can change this to a view in your
 	 * app, and inside your own view you can @include the various elements in the package
 	 * or you can use this one provided, but there's no layout or anything.
 	 */
-	'view_view' => 'laravel-blog::view',
+	'view_view' => 'laravel-blog::posts.view',
 
 	/**
 	 * The path, relative to the public_path() directory, where the original images are stored.
@@ -142,6 +149,5 @@ return array(
 	 * replaced with the You Tube Video ID in the database for this page.
 	 */
 	'you_tube_thumbnail_code' => '<img src="//img.youtube.com/vi/%YOU_TUBE_VIDEO_ID%/mqdefault.jpg" width="200" height="150" />',
-
 
 );

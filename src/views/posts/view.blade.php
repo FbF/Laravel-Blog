@@ -13,6 +13,6 @@
 @endsection
 
 @section('content')
-	@include('laravel-blog::details')
-	@include('laravel-blog::archives')
+	@include('laravel-blog::partials.details')
+	@include('laravel-blog::partials.archives')
 @stop

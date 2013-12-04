@@ -153,4 +153,31 @@ class Post extends \Eloquent {
 		return $html;
 	}
 
+	/**
+	 * Returns the HTML img tag for the post's details page image
+	 * @return null|string
+	 */
+	public function getDetailsImage()
+	{
+		if (empty($this->image))
+		{
+			return null;
+		}
+		$html = '<img src="' .\Config::get('laravel-blog::details_image_dir') . $this->image . '"';
+		$html .= ' alt="' . $this->image_alt . '"';
+		$html .= ' width="' . $this->image_width . '"';
+		$html .= ' height="' . $this->image_height . '"';
+		return $html;
+	}
+
+	public function getYouTubeThumbnailImage()
+	{
+		return str_replace('%YOU_TUBE_VIDEO_ID%', $this->you_tube_video_id, \Config::get('laravel-blog::you_tube_thumbnail_code'));
+	}
+
+	public function getYouTubeEmbedCode()
+	{
+		return str_replace('%YOU_TUBE_VIDEO_ID%', $this->you_tube_video_id, \Config::get('laravel-blog::you_tube_embed_code'));
+	}
+
 }
