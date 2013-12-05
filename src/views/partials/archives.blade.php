@@ -1,5 +1,5 @@
 @if (Config::get('laravel-blog::show_archives_on_view') and !empty($archives))
-	<ul class="archives">
+	<ul class="blog-archives">
 		@foreach ($archives as $year => $months)
 		<li>{{ $year }}
 			<ul>
