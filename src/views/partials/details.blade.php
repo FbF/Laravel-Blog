@@ -2,29 +2,33 @@
     
     <div class="blog--post">
 
-    	<h2 class="blog--title">{{ $post->title }}</h2>
+        <div class="blog--post--inner">
 
-    	@if (Config::get('laravel-blog::show_share_partial_on_view'))
-    		@include('laravel-blog::partials.share')
-    	@endif
+        	<h2 class="blog--title">{{ $post->title }}</h2>
 
-    	<p class="blog--date">
-    		{{ date(Config::get('laravel-blog::published_date_format'), strtotime($post->published_date)) }}
-    	</p>
+        	@if (Config::get('laravel-blog::show_share_partial_on_view'))
+        		@include('laravel-blog::partials.share')
+        	@endif
 
-    	@if (!empty($post->you_tube_video_id))
-    		{{ $post->getYouTubeEmbedCode() }}
-    	@elseif (!empty($post->image))
-    		{{ $post->getDetailsImage() }}
-    	@endif
+        	<p class="blog--date">
+        		{{ date(Config::get('laravel-blog::published_date_format'), strtotime($post->published_date)) }}
+        	</p>
 
-    	{{ $post->content }}
+        	@if (!empty($post->you_tube_video_id))
+        		{{ $post->getYouTubeEmbedCode() }}
+        	@elseif (!empty($post->image))
+        		{{ $post->getDetailsImage() }}
+        	@endif
 
-    	<p class="blog--back">
-    		<a href="{{ action('Fbf\LaravelBlog\PostsController@index') }}">
-    			{{ trans('laravel-blog::messages.details.back_link_text') }}
-    		</a>
-    	</p>
+        	{{ $post->content }}
+
+        	<p class="blog--back">
+        		<a href="{{ action('Fbf\LaravelBlog\PostsController@index') }}">
+        			{{ trans('laravel-blog::messages.details.back_link_text') }}
+        		</a>
+        	</p>
+    	
+    	</div>
 
     </div>
 
