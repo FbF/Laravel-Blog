@@ -166,7 +166,7 @@ class Post extends \Eloquent {
 		$html = '<img src="' .\Config::get('laravel-blog::details_image_dir') . $this->image . '"';
 		$html .= ' alt="' . $this->image_alt . '"';
 		$html .= ' width="' . $this->image_width . '"';
-		$html .= ' height="' . $this->image_height . '"';
+		$html .= ' height="' . $this->image_height . '">';
 		return $html;
 	}
 
