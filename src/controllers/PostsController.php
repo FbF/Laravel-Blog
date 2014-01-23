@@ -63,7 +63,7 @@ class PostsController extends \BaseController {
 	public function rss()
 	{
 
-		$feed = \Rss::feed('2.0', 'UTF-8');
+		$feed = Rss::feed('2.0', 'UTF-8');
 		$feed->channel(array(
 			'title' => \Config::get('laravel-blog::rss_feed_title'),
 			'description' => \Config::get('laravel-blog::rss_feed_description'),
