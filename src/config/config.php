@@ -150,4 +150,30 @@ return array(
 	 */
 	'you_tube_thumbnail_code' => '<img src="//img.youtube.com/vi/%YOU_TUBE_VIDEO_ID%/mqdefault.jpg" width="200" height="150" />',
 
+	'seed' => array(
+
+		/**
+		 * Should the seeder append (replace = false) or replace (true)
+		 */
+		'replace' => true,
+
+		/**
+		 * List of the you tube video ids that could be used
+		 */
+		'you_tube_video_ids' => array(
+			'dQw4w9WgXcQ'
+		),
+
+		/**
+		 * One in every X posts is a YouTube Video (use 0 for no YouTube Videos)
+		 */
+		'you_tube_video_freq' => 5,
+
+		/**
+		 * One in every X posts that is not a YouTube Video, has an image (use 0 for no images)
+		 */
+		'image_freq' => 2,
+
+	),
+
 );

@@ -11,6 +11,7 @@ A Laravel 4 package to add a simple blog to a site
 * Soft deletes
 * Configurable URLs, e.g. /blog or /news/yyyy/mm or /articles/< article slug >
 * Fields for title, slug, image, summary, content, published date, status, meta description and keywords, in RSS?
+* Faker seed to seed your blog with loads of good test data
 
 ## Installation
 
@@ -93,3 +94,9 @@ You can use the excellent Laravel Administrator package by frozennode to adminis
 http://administrator.frozennode.com/docs/installation
 
 A ready-to-use model config file for the Post model (posts.php) is provided in the src/config/administrator directory of the package, which you can copy into the app/config/administrator directory (or whatever you set as the model_config_path in the administrator config file).
+
+## Faker seed
+
+The package comes with a seed that can populate the table with a whole bunch of sample posts. There are some configuration options for the seed in the config file. To run it:
+
+    php artisan db:seed --class="Fbf\LaravelBlog\PostTableFakeSeeder"
