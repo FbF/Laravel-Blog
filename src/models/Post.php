@@ -109,12 +109,12 @@ class Post extends \Eloquent {
 	{
 		$archives = self::live()
 			->select(\DB::raw('
-				YEAR(`published_date`) AS `year`,
-				DATE_FORMAT(`published_date`, "%m") AS `month`,
-				MONTHNAME(`published_date`) AS `monthname`,
+				date(`published_date`, "%Y") AS `year`,
+				date(`published_date`, "%m") AS `month`,
+				date(`published_date`) AS `monthname`,
 				COUNT(*) AS `count`
 			'))
-			->groupBy(\DB::raw('DATE_FORMAT(`published_date`, "%Y%m")'))
+			->groupBy(\DB::raw('date(`published_date`, "%Y%m")'))
 			->orderBy('published_date', 'desc')
 			->get();
 		$results = array();
