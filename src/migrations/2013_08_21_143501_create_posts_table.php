@@ -11,15 +11,15 @@ class CreatePostsTable extends Migration {
 	 */
 	public function up()
 	{
-        Schema::create('fbf_blog_posts', function($table)
+    	Schema::create('fbf_blog_posts', function($table)
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('image');
-	        $table->string('image_alt');
-	        $table->string('image_width');
-	        $table->string('image_height');
-	        $table->string('you_tube_video_id');
+            $table->string('image')->nullable();
+	        $table->string('image_alt')->nullable();
+	        $table->string('image_width')->nullable();
+	        $table->string('image_height')->nullable();
+	        $table->string('you_tube_video_id')->nullable();
             $table->text('summary');
             $table->text('content');
 	        $table->boolean('in_rss');
@@ -27,11 +27,10 @@ class CreatePostsTable extends Migration {
 	        $table->text('meta_description');
 	        $table->text('meta_keywords');
             $table->enum('status', array('DRAFT', 'APPROVED'))->default('DRAFT');
-	        $table->dateTime('published_date');
+	        $table->dateTime('published_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-	}
 
 	/**
 	 * Reverse the migrations.
