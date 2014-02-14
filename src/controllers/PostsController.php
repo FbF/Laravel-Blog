@@ -8,7 +8,8 @@ class PostsController extends \BaseController {
 		$query = Post::live();
 
 		// If year and month passed in the URL, add this condition
-		if ($year && $month) {
+		if ($year && $month)
+		{
 			$query = $query->where(\DB::raw('DATE_FORMAT(published_date, "%Y%m")'), '=', $year.$month);
 		}
 
@@ -21,6 +22,11 @@ class PostsController extends \BaseController {
 		if (\Config::get('laravel-blog::show_archives_on_index'))
 		{
 			$viewData['archives'] = Post::archives();
+			if ($year && $month)
+			{
+				$viewData['selectedYear'] = $year;
+				$viewData['selectedMonth'] = $month;
+			}
 		}
 
 		return \View::make(\Config::get('laravel-blog::index_view'), $viewData);
