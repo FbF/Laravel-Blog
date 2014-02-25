@@ -70,6 +70,24 @@ The package should work out the box (provided you have a master blade layout fil
  but if you want to add other content to the pages, such as your own header, logo, navigation, sidebar etc, you'll want to
  override the views provided.
 
+The package views declare several sections that you may want to `yield` in your `app/views/layouts/master.blade.php` file, e.g.:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<title>@yield('title')</title>
+	<meta name="description" content="@yield('meta_description')">
+	<meta name="keywords" content="@yield('meta_keywords')">
+</head>
+<body>
+<div class="content">
+	@yield('content')
+</div>
+</body>
+</html>
+```
+
 The package's views are actually really simple, and most of the presentation is done in partials. This is deliberate so you
  can override the package's views in your own app, so you can include your own chrome, navigation and sidebars etc, yet
  you can also still make use of the partials provided, if you want to.
