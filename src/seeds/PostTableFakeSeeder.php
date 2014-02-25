@@ -2,70 +2,155 @@
 
 class PostTableFakeSeeder extends \Seeder {
 
+	protected $post;
+
 	public function run()
+	{
+		$this->truncate();
+
+		$this->faker = \Faker\Factory::create();
+
+		$numberToCreate = \Config::get('laravel-blog::seed.number');
+
+		for ($i = 0; $i < $numberToCreate; $i++)
+		{
+			$this->create();
+		}
+
+		echo 'Database seeded' . PHP_EOL;
+	}
+
+	protected function truncate()
 	{
 		$replace = \Config::get('laravel-blog::seed.replace');
 		if ($replace)
 		{
 			\DB::table('fbf_blog_posts')->delete();
 		}
+	}
 
-		$faker = \Faker\Factory::create();
+	protected function create()
+	{
+		$this->post = new Post();
+		$this->setTitle();
+		$this->setMedia();
+		$this->setSummary();
+		$this->setContent();
+		$this->setInRss();
+		$this->setPageTitle();
+		$this->setMetaDescription();
+		$this->setMetaKeywords();
+		$this->setStatus();
+		$this->setPublishedDate();
+		$this->post->save();
+	}
 
+	protected function setTitle()
+	{
+		$title = $this->faker->sentence(rand(1, 10));
+		$this->post->title = $title;
+	}
+
+	protected function setMedia()
+	{
+		if ($this->hasYouTubeVideos())
+		{
+			$this->setYouTubeVideoId();
+		}
+		elseif ($this->hasMainImage())
+		{
+			$this->doMainImage();
+		}
+	}
+
+	protected function hasYouTubeVideos()
+	{
+		$youTubeVideoFreq = \Config::get('laravel-blog::seed.you_tube.freq');
+		$hasYouTubeVideos = $youTubeVideoFreq > 0 && rand(1, $youTubeVideoFreq) == $youTubeVideoFreq;
+		return $hasYouTubeVideos;
+	}
+
+	protected function setYouTubeVideoId()
+	{
+		$this->post->you_tube_video_id = $this->faker->randomElement(\Config::get('laravel-blog::seed.you_tube.video_ids'));
+	}
+
+	protected function hasMainImage()
+	{
+		$mainImageFreq = \Config::get('laravel-blog::seed.images.main_image.freq');
+		$hasMainImage = $mainImageFreq > 0 && rand(1, $mainImageFreq) == $mainImageFreq;
+		return $hasMainImage;
+	}
+
+	protected function doMainImage()
+	{
+		$imageOptions = \Config::get('laravel-blog::images.main_image');
+		if (!$imageOptions['show'])
+		{
+			return false;
+		}
+		$seedOptions = \Config::get('laravel-blog::seed.images.main_image');
+		$original = $this->faker->image(
+			public_path($imageOptions['original']['dir']),
+			$seedOptions['original_width'],
+			$seedOptions['original_height'],
+			$seedOptions['category']
+		);
+		$filename = basename($original);
+		foreach ($imageOptions['sizes'] as $sizeOptions)
+		{
+			$image = $this->faker->image(
+				public_path($sizeOptions['dir']),
+				$sizeOptions['width'],
+				$sizeOptions['height']
+			);
+			rename($image, public_path($sizeOptions['dir']) . $filename);
+		}
+		$this->post->main_image = $filename;
+		$this->post->main_image_alt = $this->post->title;
+	}
+
+	protected function setSummary()
+	{
+		$this->post->summary = '<p>'.implode('</p><p>', $this->faker->paragraphs(rand(1, 2))).'</p>';
+	}
+
+	protected function setContent()
+	{
+		$this->post->content = '<p>'.implode('</p><p>', $this->faker->paragraphs(rand(4, 10))).'</p>';
+	}
+
+	protected function setInRss()
+	{
+		$this->post->in_rss = (bool) rand(0, 1);
+	}
+
+	protected function setPageTitle()
+	{
+		$this->post->page_title = $this->post->title;
+	}
+
+	protected function setMetaDescription()
+	{
+		$this->post->meta_description = $this->faker->paragraph(rand(1, 2));
+	}
+
+	protected function setMetaKeywords()
+	{
+		$this->post->meta_keywords = $this->faker->words(10, true);
+	}
+
+	protected function setStatus()
+	{
 		$statuses = array(
 			Post::DRAFT,
 			Post::APPROVED
 		);
+		$this->post->status = $this->faker->randomElement($statuses);
+	}
 
-		for ($i = 0; $i < 100; $i++)
-		{
-			$post = new Post();
-			$title = $faker->sentence(rand(1, 10));
-			$post->title = $title;
-			$youTubeVideoFreq = \Config::get('laravel-blog::seed.you_tube_video_freq');
-			$hasYouTubeVideos = $youTubeVideoFreq > 0 && rand(1, $youTubeVideoFreq) == $youTubeVideoFreq;
-			if ($hasYouTubeVideos)
-			{
-				$post->you_tube_video_id = $faker->randomElement(\Config::get('laravel-blog::seed.you_tube_video_ids'));
-				$post->image = $post->image_alt = '';
-			}
-			else
-			{
-				$post->you_tube_video_id = '';
-				$imageFreq = \Config::get('laravel-blog::seed.image_freq');
-				$hasImage = $imageFreq > 0 && rand(1, $imageFreq) == $imageFreq;
-				if ($hasImage)
-				{
-					$thumbnail = $faker->image(
-						public_path(\Config::get('laravel-blog::thumbnails_image_dir')),
-						\Config::get('laravel-blog::thumbnail_image_width'),
-						\Config::get('laravel-blog::thumbnail_image_height')
-					);
-					$filename = basename($thumbnail);
-					$details = $faker->image(
-						public_path(\Config::get('laravel-blog::details_image_dir')),
-						rand(200, \Config::get('laravel-blog::details_image_max_width')),
-						rand(200, \Config::get('laravel-blog::details_image_max_height'))
-					);
-					rename($details, public_path(\Config::get('laravel-blog::details_image_dir')) . $filename);
-					$post->image = $filename;
-					$post->image_alt = $title;
-				}
-				else
-				{
-					$post->image = $post->image_alt = '';
-				}
-			}
-			$summary = $faker->paragraph(rand(1, 4));
-			$post->summary = $summary;
-			$post->content = '<p>'.implode('</p><p>', $faker->paragraphs(rand(1, 10))).'</p>';
-			$post->in_rss = (bool) rand(0, 1);
-			$post->meta_description = $summary;
-			$post->meta_keywords = $faker->words(10, true);
-			$post->status = $faker->randomElement($statuses);
-			$post->published_date = $faker->dateTimeBetween('-3 years', '+1 month');
-			$post->save();
-		}
-		echo 'Database seeded' . PHP_EOL;
+	protected function setPublishedDate()
+	{
+		$this->post->published_date = $this->faker->dateTimeBetween('-2 years', '+1 month')->format('Y-m-d H:i:s');
 	}
 }

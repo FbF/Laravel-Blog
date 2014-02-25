@@ -15,10 +15,8 @@ class CreatePostsTable extends Migration {
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('image')->nullable();
-	        $table->string('image_alt')->nullable();
-	        $table->string('image_width')->nullable();
-	        $table->string('image_height')->nullable();
+            $table->string('main_image')->nullable();
+	        $table->string('main_image_alt')->nullable();
 	        $table->string('you_tube_video_id')->nullable();
             $table->text('summary');
             $table->text('content');
@@ -29,7 +27,6 @@ class CreatePostsTable extends Migration {
             $table->enum('status', array('DRAFT', 'APPROVED'))->default('DRAFT');
 	        $table->dateTime('published_date')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
 	}
 

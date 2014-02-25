@@ -2,80 +2,122 @@
 
 class PostsController extends \BaseController {
 
-	public function index($year = null, $month = null)
+	/**
+	 * @var \Fbf\LaravelBlog\Post
+	 */
+	protected $post;
+
+	/**
+	 * @param \Fbf\LaravelBlog\Post $post
+	 */
+	public function __construct(Post $post)
 	{
-		// Initiate query, don't paginate on it yet in case we want the year/month condition added
-		$query = Post::live();
-
-		// If year and month passed in the URL, add this condition
-		if ($year && $month)
-		{
-			$query = $query->where(\DB::raw('DATE_FORMAT(published_date, "%Y%m")'), '=', $year.$month);
-		}
-
-		// Get the current page's posts
-		$viewData['posts'] = $query
-			->orderBy('published_date', 'desc')
-			->paginate(\Config::get('laravel-blog::results_per_page'));
-
-		// Get the archives data if the config says to show the archives on the index page
-		if (\Config::get('laravel-blog::show_archives_on_index'))
-		{
-			$viewData['archives'] = Post::archives();
-			if ($year && $month)
-			{
-				$viewData['selectedYear'] = $year;
-				$viewData['selectedMonth'] = $month;
-			}
-		}
-
-		return \View::make(\Config::get('laravel-blog::index_view'), $viewData);
+		$this->post = $post;
 	}
 
-	public function view($slug) {
+	/**
+	 * @return mixed
+	 */
+	public function index()
+	{
+		// Get the selected posts
+		$posts = $this->post->live()
+			->orderBy('published_date', 'desc')
+			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 
+		// Get the archives data if the config says to show the archives on the index page
+		if (\Config::get('laravel-blog::views.index_page.show_archives'))
+		{
+			$archives = $this->post->archives();
+		}
+
+		return \View::make(\Config::get('laravel-blog::views.index_page.view'), compact('posts', 'archives'));
+	}
+
+	/**
+	 * @param $selectedYear
+	 * @param $selectedMonth
+	 * @return mixed
+	 */
+	public function indexByYearMonth($selectedYear, $selectedMonth)
+	{
+		// Get the selected posts
+		$posts = $this->post->live()
+			->byYearMonth($selectedYear, $selectedMonth)
+			->orderBy('published_date', 'desc')
+			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
+
+		// Get the archives data if the config says to show the archives on the index page
+		if (\Config::get('laravel-blog::views.index_page.show_archives'))
+		{
+			$archives = $this->post->archives();
+		}
+
+		return \View::make(\Config::get('laravel-blog::views.index_page.view'), compact('posts', 'selectedYear', 'selectedMonth', 'archives'));
+	}
+
+	/**
+	 * @param $relationshipIdentifier
+	 * @return mixed
+	 */
+	public function indexByRelationship($relationshipIdentifier)
+	{
+		// Get the selected posts
+		$posts = $this->post->live()
+			->byRelationship($relationshipIdentifier)
+			->orderBy('published_date', 'desc')
+			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
+
+		// Get the archives data if the config says to show the archives on the index page
+		if (\Config::get('laravel-blog::views.index_page.show_archives'))
+		{
+			$archives = $this->post->archives();
+		}
+
+		return \View::make(\Config::get('laravel-blog::views.index_page.view'), compact('posts', 'archives'));
+	}
+
+	/**
+	 * @param $slug
+	 * @return mixed
+	 */
+	public function view($slug)
+	{
 		// Get the selected post
-		$viewData['post'] = $post = Post::live()
+		$post = $this->post->live()
 			->where('slug', '=', $slug)
 			->firstOrFail();
 
 		// Get the next newest and next oldest post if the config says to show these links on the view page
-		if (\Config::get('laravel-blog::show_adjacent_posts_on_view'))
+		$newer = $older = false;
+		if (\Config::get('laravel-blog::views.view_page.show_adjacent_items'))
 		{
-			$viewData['newer'] = Post::live()
-				->where('published_date', '>=', $post->published_date)
-				->where('id', '<>', $post->id)
-				->orderBy('published_date', 'asc')
-				->orderBy('id', 'asc')
-				->first();
-
-			$viewData['older'] = Post::live()
-				->where('published_date', '<=', $post->published_date)
-				->where('id', '<>', $post->id)
-				->orderBy('published_date', 'desc')
-				->orderBy('id', 'desc')
-				->first();
+			$newer = $post->newer();
+			$older = $post->older();
 		}
 
-		if (\Config::get('laravel-blog::show_archives_on_view'))
+		// Get the archives data if the config says to show the archives on the view page
+		if (\Config::get('laravel-blog::views.view_page.show_archives'))
 		{
-			$viewData['archives'] = Post::archives();
+			$archives = $this->post->archives();
 		}
 
-		return \View::make(\Config::get('laravel-blog::view_view'), $viewData);
+		return \View::make(\Config::get('laravel-blog::views.view_page.view'), compact('post', 'newer', 'older', 'archives'));
 
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function rss()
 	{
-
 		$feed = Rss::feed('2.0', 'UTF-8');
 		$feed->channel(array(
-			'title' => \Config::get('laravel-blog::rss_feed_title'),
-			'description' => \Config::get('laravel-blog::rss_feed_description'),
+			'title' => \Config::get('laravel-blog::meta.rss_feed.title'),
+			'description' => \Config::get('laravel-blog::meta.rss_feed.description'),
 			'link' => \URL::current(),
 		));
-		$posts = Post::where('status', '=', Post::APPROVED)
+		$posts = $this->post->live()
 			->where('in_rss', '=', true)
 			->orderBy('published_date', 'desc')
 			->take(10)
@@ -84,12 +126,10 @@ class PostsController extends \BaseController {
 			$feed->item(array(
 				'title' => $post->title,
 				'description' => $post->summary,
-				'link' => \URL::to(\Config::get('laravel-blog::uri').'/'.$post->slug),
+				'link' => \URL::action('Fbf\LaravelBlog\PostsController@view', array('slug' => $post->slug)),
 			));
 		}
-
 		return \Response::make($feed, 200, array('Content-Type', 'application/rss+xml'));
-
 	}
 
 }

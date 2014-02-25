@@ -1,53 +1,41 @@
-<div class="blog blog__details">
-    
-    <div class="blog--post">
+<div class="item">
 
-        <div class="blog--post--inner">
+	<p class="item--all-link">
+		<a href="{{ action('Fbf\LaravelBlog\PostsController@index') }}">
+			{{ trans('laravel-blog::messages.details.all_link_text') }}
+		</a>
+	</p>
 
-        	<h2 class="blog--title">{{ $post->title }}</h2>
+	<h2 class="item--title">
+		{{ $post->title }}
+	</h2>
 
-        	@if (Config::get('laravel-blog::show_share_partial_on_view'))
-        		@include('laravel-blog::partials.share')
-        	@endif
+	<p class="item--date">
+		{{ $post->getDate() }}
+	</p>
 
-        	<p class="blog--date">
-        		{{ date(Config::get('laravel-blog::published_date_format'), strtotime($post->published_date)) }}
-        	</p>
+	<div class="item--summary">
+		{{ $post->summary }}
+	</div>
 
-        	@if (!empty($post->you_tube_video_id))
-        		{{ $post->getYouTubeEmbedCode() }}
-        	@elseif (!empty($post->image))
-        		{{ $post->getDetailsImage() }}
-        	@endif
+	@if (Config::get('laravel-blog::views.view_page.show_share_partial'))
+		@include('laravel-blog::partials.share')
+	@endif
 
-        	{{ $post->content }}
+	@if (!empty($post->you_tube_video_id))
+		<div class="item--media item--media__youtube">
+			{{ $post->getYouTubeEmbedCode() }}
+		</div>
+	@elseif (!empty($post->main_image))
+		<div class="item--media item--media__image">
+			{{ $post->getImage('main_image', 'resized') }}
+		</div>
+	@endif
 
-        	<p class="blog--back">
-        		<a href="{{ action('Fbf\LaravelBlog\PostsController@index') }}">
-        			{{ trans('laravel-blog::messages.details.back_link_text') }}
-        		</a>
-        	</p>
-    	
-    	</div>
-
-    </div>
-
-
-
-    @if (Config::get('laravel-blog::show_adjacent_posts_on_view') && ($newer || $older))
-
-    	<div class="blog--adjacent-posts">
-
-    		@if ($newer)
-    			<a href="{{ $newer->getUrl() }}" class="blog--prev-post">{{ trans('laravel-blog::messages.details.newer_link_text', array('title' => $newer->title)) }}</a>
-    		@endif
-
-    		@if ($older)
-    			<a href="{{ $older->getUrl() }}" class="blog--next-post">{{ trans('laravel-blog::messages.details.older_link_text', array('title' => $older->title)) }}</a>
-    		@endif
-
-    	</div>
-
-    @endif
+	{{ $post->content }}
 
 </div>
+
+@if (Config::get('laravel-blog::views.view_page.show_adjacent_items') && ($newer || $older))
+	@include('laravel-blog::partials.adjacent')
+@endif

@@ -1,58 +1,57 @@
-<div class="blog blog__list">
+<div class="item-list">
 
-    @if (!$posts->isEmpty())
+	@if (!$posts->isEmpty())
 
-    	@foreach ($posts as $post)
+		@foreach ($posts as $post)
+	
+			<div class="item">
+		
+				<h2 class="item--title">
+					<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+						{{ $post->title }}
+					</a>
+				</h2>
+		
+				<p class="item--date">
+					{{ $post->getDate() }}
+				</p>
+		
+				@if (!empty($post->you_tube_video_id))
+					<div class="item--thumb item--thumb__youtube">
+						<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+							{{ $post->getYouTubeThumbnailImage() }}
+						</a>
+					</div>
+				@elseif (!empty($post->main_image))
+					<div class="item--thumb item--thumb__image">
+						<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+							{{ $post->getImage('main_image', 'thumbnail') }}
+						</a>
+					</div>
+				@endif
+		
+				<div class="item--summary">
+					{{ $post->summary }}
+				</div>
+		
+				<p class="item--more-link">
+					<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
+						{{ trans('laravel-blog::messages.list.more_link_text') }}
+					</a>
+				</p>
+		
+			</div>
+	
+		@endforeach
 
-    		<div class="blog--post">
-    		    
-    		    <div class="blog--post--inner">
+		{{ $posts->links() }}
 
-        			<h2 class="blog--title">
-        				<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
-        					{{ $post->title }}
-        				</a>
-        			</h2>
+	@else
 
-        			<p class="blog--date">
-        				{{ date(Config::get('laravel-blog::published_date_format'), strtotime($post->published_date)) }}
-        			</p>
+		<p class="item-list--empty">
+			{{ trans('laravel-blog::messages.list.no_items') }}
+		</p>
 
-        			@if (!empty($post->you_tube_video_id))
-        				<div class="blog--youtube-thumb">
-        					<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
-        						{{ $post->getYouTubeThumbnailImage() }}
-        					</a>
-        				</div>
-        			@elseif (!empty($post->image))
-        			    <div class="blog--image-thumb">
-            				<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
-            					{{ $post->getThumbnailImage() }}
-            				</a>
-        				</div>
-        			@endif
+	@endif
 
-        			<p>{{ $post->summary }}</p>
-
-        			<p class="blog--view-more">
-        				<a href="{{ $post->getUrl() }}" title="{{ $post->title }}">
-        					{{ trans('laravel-blog::messages.list.more_link_text') }}
-        				</a>
-        			</p>
-    			</div>
-
-    		</div>
-
-    	@endforeach
-
-    	{{ $posts->links() }}
-
-    @else
-
-    	<p class="blog--empty">
-    		{{ trans('laravel-blog::messages.list.no_posts') }}
-    	</p>
-
-    @endif
-    
 </div>
