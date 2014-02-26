@@ -36,6 +36,7 @@ class PostTableFakeSeeder extends \Seeder {
 		$this->setMedia();
 		$this->setSummary();
 		$this->setContent();
+		$this->setLink();
 		$this->setInRss();
 		$this->setPageTitle();
 		$this->setMetaDescription();
@@ -118,6 +119,39 @@ class PostTableFakeSeeder extends \Seeder {
 	protected function setContent()
 	{
 		$this->post->content = '<p>'.implode('</p><p>', $this->faker->paragraphs(rand(4, 10))).'</p>';
+	}
+
+	protected function setLink()
+	{
+		if ($this->hasLink())
+		{
+			$this->setLinkText();
+			$this->setLinkUrl();
+		}
+	}
+
+	protected function hasLink()
+	{
+		$showLink =  \Config::get('laravel-blog::link.show');
+		if (!$showLink)
+		{
+			return false;
+		}
+		$linkFreq = \Config::get('laravel-blog::seed.link.freq');
+		$hasLink = $linkFreq > 0 && rand(1, $linkFreq) == $linkFreq;
+		return $hasLink;
+	}
+
+	protected function setLinkText()
+	{
+		$linkTexts = \Config::get('laravel-blog::seed.link.texts');
+		$this->post->link_text = $this->faker->randomElement($linkTexts);
+	}
+
+	protected function setLinkUrl()
+	{
+		$linkUrls = \Config::get('laravel-blog::seed.link.urls');
+		$this->post->link_url = $this->faker->randomElement($linkUrls);
 	}
 
 	protected function setInRss()

@@ -103,6 +103,16 @@ return array(
 			'title' => 'Content',
 			'type' => 'wysiwyg',
 		),
+		'link_text' => array(
+			'title' => 'Link Text',
+			'type' => 'text',
+			'visible' => Config::get('laravel-blog::link.show'),
+		),
+		'link_url' => array(
+			'title' => 'Link URL',
+			'type' => 'text',
+			'visible' => Config::get('laravel-blog::link.show'),
+		),
 		'in_rss' => array(
 			'title' => 'In RSS Feed?',
 			'type' => 'bool',

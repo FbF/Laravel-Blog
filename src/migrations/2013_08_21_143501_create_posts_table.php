@@ -20,6 +20,8 @@ class CreatePostsTable extends Migration {
 	        $table->string('you_tube_video_id')->nullable();
             $table->text('summary');
             $table->text('content');
+	        $table->string('link_text')->nullable();
+	        $table->string('link_url')->nullable();
 	        $table->boolean('in_rss');
 	        $table->string('slug')->unique();
 	        $table->text('meta_description');

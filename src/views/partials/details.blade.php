@@ -34,6 +34,14 @@
 
 	{{ $post->content }}
 
+	@if (Config::get('laravel-blog::link.show') && !empty($post->link_url) && !empty($post->link_text))
+		<p class="item--external-link">
+			<a href="{{ $post->link_url }}">
+				{{ $post->link_text }}
+			</a>
+		</p>
+	@endif
+
 </div>
 
 @if (Config::get('laravel-blog::views.view_page.show_adjacent_items') && ($newer || $older))

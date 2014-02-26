@@ -70,35 +70,12 @@ return array(
 	),
 
 	/**
-	 * Configuration options for the seeder dates
-	 */
-	'dates' => array(
-
-		/**
-		 * Options for the text dates column
-		 */
-		'text_dates' => array(
-			'25<sup>th</sup> December 0000',
-			'December 31, 9pm until late',
-			'Tuesday - Wednesday, w/c 24/2/2014',
-			'1 Feb',
-			'12 - 15 February 2014',
-			'From 2014-02-24 21:15:00T0100 to 2014-02-25 22:15:30T0100',
-		),
-
-		/**
-		 * One in every X posts spans more than 1 day (use 0 for no multi-day posts)
-		 */
-		'multi_day_freq' => 5,
-	),
-
-	/**
 	 * Configuration options for the seeder links
 	 */
 	'link' => array(
 
 		/**
-		 * One in every X posts has a link (use 0 for no links)
+		 * One in every X events has a link (use 0 for no links)
 		 */
 		'freq' => 2,
 
@@ -120,33 +97,6 @@ return array(
 			'http://www.google.com',
 			'http://www.bbc.co.uk',
 			'http://www.fivebyfiveuk.com',
-		),
-
-	),
-
-	/**
-	 * Configuration options for the seeder maps
-	 */
-	'map' => array(
-
-		/**
-		 * One in every X posts has a map (use 0 for no maps)
-		 */
-		'freq' => 2,
-
-		/**
-		 *
-		 */
-		'marker' => array(
-			'latitude' => array(
-				'min' => -90,
-				'max' => 90,
-			),
-			'longitude' => array(
-				'min' => -180,
-				'max' => 180,
-			),
-
 		),
 
 	),
