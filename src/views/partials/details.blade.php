@@ -1,4 +1,4 @@
-<div class="item">
+<div class="item{{ $post->is_sticky ? ' item__sticky' : '' }}">
 
 	<p class="item--all-link">
 		<a href="{{ action('Fbf\LaravelBlog\PostsController@index') }}">

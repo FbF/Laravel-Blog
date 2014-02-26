@@ -23,6 +23,7 @@ class CreatePostsTable extends Migration {
 	        $table->string('link_text')->nullable();
 	        $table->string('link_url')->nullable();
 	        $table->boolean('in_rss');
+	        $table->boolean('is_sticky');
 	        $table->string('slug')->unique();
 	        $table->text('meta_description');
 	        $table->text('meta_keywords');

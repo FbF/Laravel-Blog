@@ -22,6 +22,7 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected posts
 		$posts = $this->post->live()
+			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 
@@ -44,6 +45,7 @@ class PostsController extends \BaseController {
 		// Get the selected posts
 		$posts = $this->post->live()
 			->byYearMonth($selectedYear, $selectedMonth)
+			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 
@@ -65,6 +67,7 @@ class PostsController extends \BaseController {
 		// Get the selected posts
 		$posts = $this->post->live()
 			->byRelationship($relationshipIdentifier)
+			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 

@@ -37,6 +37,7 @@ class PostTableFakeSeeder extends \Seeder {
 		$this->setSummary();
 		$this->setContent();
 		$this->setLink();
+		$this->setIsSticky();
 		$this->setInRss();
 		$this->setPageTitle();
 		$this->setMetaDescription();
@@ -152,6 +153,11 @@ class PostTableFakeSeeder extends \Seeder {
 	{
 		$linkUrls = \Config::get('laravel-blog::seed.link.urls');
 		$this->post->link_url = $this->faker->randomElement($linkUrls);
+	}
+
+	protected function setIsSticky()
+	{
+		$this->post->is_sticky = (bool) rand(0, 1);
 	}
 
 	protected function setInRss()

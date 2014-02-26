@@ -113,6 +113,10 @@ return array(
 			'type' => 'text',
 			'visible' => Config::get('laravel-blog::link.show'),
 		),
+		'is_sticky' => array(
+			'title' => 'Is sticky?',
+			'type' => 'bool',
+		),
 		'in_rss' => array(
 			'title' => 'In RSS Feed?',
 			'type' => 'bool',

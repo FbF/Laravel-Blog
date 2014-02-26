@@ -9,11 +9,12 @@ A Laravel 4 package to add a simple blog to a site
 * Year/Month archive filtering, including an archive partial that you can include in your own views (requires MySQL)
 * Draft/Approved status and published date fields for approvals and scheduled publishing of posts
 * Configurable URLs, e.g. /blog or /news/yyyy/mm or /articles/< article slug >
-* Fields for title, slug, main image or YouTube Video ID, summary, content, published date, status, meta description and keywords, in RSS?
+* Fields for title, slug, main image or YouTube Video ID, summary, content, link text and url for external links, is sticky?, published date, status, meta description and keywords, in RSS?
 * Faker seed to seed your blog with loads of good test data
 * Administrator config file for use with FrozenNode's Administrator package
 * Bundled migration for building the database schema
 * Extendable to add categories or tags relationships and filter by them, see below
+*
 
 ## Installation
 
