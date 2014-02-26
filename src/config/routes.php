@@ -14,8 +14,10 @@ return array(
 	'base_uri' => 'blog',
 
 	/**
-	 * URI of the blog relationship filter
+	 * URI prefix of the blog relationship filter
+	 *
+	 * @type mixed false | string
 	 */
-	'relationship_uri' => false,
+	'relationship_uri_prefix' => 'category',
 
 );

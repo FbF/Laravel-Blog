@@ -4,7 +4,7 @@ return array(
 
 	'list' => array(
 		'more_link_text' => 'Read more',
-		'no_posts' => 'Sorry, there are no articles.'
+		'no_items' => 'Sorry, there are no articles.'
 	),
 
 	'details' => array(

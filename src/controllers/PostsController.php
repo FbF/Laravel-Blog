@@ -22,7 +22,7 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected posts
 		$posts = $this->post->live()
-			->orderBy('published_date', 'desc')
+			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 
 		// Get the archives data if the config says to show the archives on the index page
@@ -44,7 +44,7 @@ class PostsController extends \BaseController {
 		// Get the selected posts
 		$posts = $this->post->live()
 			->byYearMonth($selectedYear, $selectedMonth)
-			->orderBy('published_date', 'desc')
+			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 
 		// Get the archives data if the config says to show the archives on the index page
@@ -65,7 +65,7 @@ class PostsController extends \BaseController {
 		// Get the selected posts
 		$posts = $this->post->live()
 			->byRelationship($relationshipIdentifier)
-			->orderBy('published_date', 'desc')
+			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
 
 		// Get the archives data if the config says to show the archives on the index page
@@ -85,7 +85,7 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected post
 		$post = $this->post->live()
-			->where('slug', '=', $slug)
+			->where($this->post->getTable().'.slug', '=', $slug)
 			->firstOrFail();
 
 		// Get the next newest and next oldest post if the config says to show these links on the view page
@@ -118,8 +118,8 @@ class PostsController extends \BaseController {
 			'link' => \URL::current(),
 		));
 		$posts = $this->post->live()
-			->where('in_rss', '=', true)
-			->orderBy('published_date', 'desc')
+			->where($this->post->getTable().'.in_rss', '=', true)
+			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->take(10)
 			->get();
 		foreach ($posts as $post){

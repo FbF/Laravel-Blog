@@ -34,8 +34,8 @@ class Post extends \Eloquent {
 	 */
 	public function scopeLive($query)
 	{
-		return $query->where('status', '=', Post::APPROVED)
-			->where('published_date', '<=', \Carbon\Carbon::now());
+		return $query->where($this->getTable().'.status', '=', Post::APPROVED)
+			->where($this->getTable().'.published_date', '<=', \Carbon\Carbon::now());
 	}
 
 	/**
@@ -94,6 +94,19 @@ class Post extends \Eloquent {
 			);
 		}
 		return $results;
+	}
+
+	/**
+	 * To filter posts by a relationship, you should extend the Post class and define both the relationship and the
+	 * scopeByRelationship() method in your subclass. See the package readme for an example.
+	 *
+	 * @param $query
+	 * @param $relationshipIdentifier
+	 * @throws Exception
+	 */
+	public function scopeByRelationship($query, $relationshipIdentifier)
+	{
+		throw new Exception('Extend this class and override this method according to your app\s requirements');
 	}
 
 	/**
