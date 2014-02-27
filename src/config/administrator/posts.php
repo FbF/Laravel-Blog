@@ -62,30 +62,30 @@ return array(
 					return $model->exists;
 				},
 		),
-		'image' => array(
-			'title' => 'Image',
+		'main_image' => array(
+			'title' => 'Main Image',
 			'type' => 'image',
 			'naming' => 'random',
-			'location' => public_path() . Config::get('laravel-blog::originals_dir'),
+			'location' => public_path() . Config::get('laravel-blog::images.main_image.original.dir'),
 			'size_limit' => 5,
 			'sizes' => array(
 				array(
-					Config::get('laravel-blog::thumbnail_image_width'),
-					Config::get('laravel-blog::thumbnail_image_height'),
+					Config::get('laravel-blog::images.main_image.sizes.thumbnail.width'),
+					Config::get('laravel-blog::images.main_image.sizes.thumbnail.height'),
 					'crop',
-					public_path() . Config::get('laravel-blog::thumbnails_image_dir'),
+					public_path() . Config::get('laravel-blog::images.main_image.sizes.thumbnail.dir'),
 					100
 				),
 				array(
-					Config::get('laravel-blog::details_image_max_width'),
-					Config::get('laravel-blog::details_image_max_height'),
+					Config::get('laravel-blog::images.main_image.sizes.resized.width'),
+					Config::get('laravel-blog::images.main_image.sizes.resized.height'),
 					'auto',
-					public_path() . Config::get('laravel-blog::details_image_dir'),
+					public_path() . Config::get('laravel-blog::images.main_image.sizes.resized.dir'),
 					100
 				),
 			),
 		),
-		'image_alt' => array(
+		'main_image_alt' => array(
 			'title' => 'Image ALT text',
 			'type' => 'text',
 		),
