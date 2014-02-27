@@ -72,14 +72,14 @@ return array(
 				array(
 					Config::get('laravel-blog::images.main_image.sizes.thumbnail.width'),
 					Config::get('laravel-blog::images.main_image.sizes.thumbnail.height'),
-					'crop',
+					Config::get('laravel-blog::images.main_image.sizes.thumbnail.method'),
 					public_path() . Config::get('laravel-blog::images.main_image.sizes.thumbnail.dir'),
 					100
 				),
 				array(
 					Config::get('laravel-blog::images.main_image.sizes.resized.width'),
 					Config::get('laravel-blog::images.main_image.sizes.resized.height'),
-					'auto',
+					Config::get('laravel-blog::images.main_image.sizes.resized.method'),
 					public_path() . Config::get('laravel-blog::images.main_image.sizes.resized.dir'),
 					100
 				),
