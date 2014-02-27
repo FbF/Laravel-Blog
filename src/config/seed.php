@@ -75,7 +75,7 @@ return array(
 	'link' => array(
 
 		/**
-		 * One in every X events has a link (use 0 for no links)
+		 * One in every X items has a link (use 0 for no links)
 		 */
 		'freq' => 2,
 

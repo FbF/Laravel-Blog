@@ -122,6 +122,10 @@ return array(
 			'type' => 'bool',
 		),
 		'meta_description' => array(
+			'title' => 'Page Title',
+			'type' => 'text',
+		),
+		'meta_description' => array(
 			'title' => 'Meta Description',
 			'type' => 'textarea',
 		),

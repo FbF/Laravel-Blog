@@ -25,6 +25,7 @@ class CreatePostsTable extends Migration {
 	        $table->boolean('in_rss');
 	        $table->boolean('is_sticky');
 	        $table->string('slug')->unique();
+	        $table->string('page_title');
 	        $table->text('meta_description');
 	        $table->text('meta_keywords');
             $table->enum('status', array('DRAFT', 'APPROVED'))->default('DRAFT');
