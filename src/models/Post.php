@@ -248,6 +248,16 @@ class Post extends \Eloquent {
 	}
 
 	/**
+	 * Helper function to determine whether the item has a YouTube video
+	 *
+	 * @return bool
+	 */
+	public function hasYouTubeVideo()
+	{
+		return !empty($this->you_tube_video_id);
+	}
+
+	/**
 	 * Returns the thumbnail image code defined in the config, for the current item's you tube video id
 	 *
 	 * @return string
@@ -283,6 +293,15 @@ class Post extends \Eloquent {
 	public function getUrl()
 	{
 		return \URL::action('Fbf\LaravelBlog\PostsController@view', array('slug' => $this->slug));
+	}
+
+	/**
+	 * Help function to determine whether the item has a link
+	 * @return bool
+	 */
+	public function hasLink()
+	{
+		return !empty($this->link_text) && !empty($this->link_url);
 	}
 
 	/**
