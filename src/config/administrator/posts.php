@@ -204,8 +204,8 @@ return array(
 	 */
 	'rules' => array(
 		'title' => 'required|max:255',
-		'image' => 'max:255',
-		'image_alt' => 'max:255',
+		'main_image' => 'max:255',
+		'main_image_alt' => 'max:255',
 		'you_tube_video_id' => 'max:255',
 		'status' => 'required|in:'.Fbf\LaravelBlog\Post::DRAFT.','.Fbf\LaravelBlog\Post::APPROVED,
 		'published_date' => 'required|date_format:"Y-m-d H:i:s"|date',
