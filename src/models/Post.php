@@ -15,6 +15,15 @@ class Post extends \Eloquent {
 	protected $table = 'fbf_blog_posts';
 
 	/**
+	 * The prefix string for config options.
+	 *
+	 * Defaults to the package's config prefix string
+	 *
+	 * @var string
+	 */
+	protected $configPrefix = 'laravel-blog::';
+
+	/**
 	 * Used for Cviebrock/EloquentSluggable
 	 * @var array
 	 */
@@ -142,7 +151,7 @@ class Post extends \Eloquent {
 		{
 			return null;
 		}
-		return self::getImageConfig($type, $size, 'dir') . $this->$type;
+		return $this->getImageConfig($type, $size, 'dir') . $this->$type;
 	}
 
 	/**
@@ -158,7 +167,7 @@ class Post extends \Eloquent {
 		{
 			return null;
 		}
-		$method = self::getImageConfig($type, $size, 'method');
+		$method = $this->getImageConfig($type, $size, 'method');
 
 		// Width varies for images that are 'portrait', 'auto', 'fit', 'crop'
 		if (in_array($method, array('portrait', 'auto', 'fit', 'crop')))
@@ -166,7 +175,7 @@ class Post extends \Eloquent {
 			list($width) = $this->getImageDimensions($type, $size);
 			return $width;
 		}
-		return self::getImageConfig($type, $size, 'width');
+		return $this->getImageConfig($type, $size, 'width');
 	}
 
 	/**
@@ -182,7 +191,7 @@ class Post extends \Eloquent {
 		{
 			return null;
 		}
-		$method = self::getImageConfig($type, $size, 'method');
+		$method = $this->getImageConfig($type, $size, 'method');
 
 		// Height varies for images that are 'landscape', 'auto', 'fit', 'crop'
 		if (in_array($method, array('landscape', 'auto', 'fit', 'crop')))
@@ -190,7 +199,7 @@ class Post extends \Eloquent {
 			list($width, $height) = $this->getImageDimensions($type, $size);
 			return $height;
 		}
-		return self::getImageConfig($type, $size, 'height');
+		return $this->getImageConfig($type, $size, 'height');
 	}
 
 	/**
@@ -202,7 +211,7 @@ class Post extends \Eloquent {
 	 */
 	protected function getImageDimensions($type, $size)
 	{
-		$pathToImage = public_path(self::getImageConfig($type, $size, 'dir') . $this->$type);
+		$pathToImage = public_path($this->getImageConfig($type, $size, 'dir') . $this->$type);
 		if (is_file($pathToImage) && file_exists($pathToImage))
 		{
 			list($width, $height) = getimagesize($pathToImage);
@@ -223,9 +232,9 @@ class Post extends \Eloquent {
 	 * @internal param $type
 	 * @return mixed
 	 */
-	public static function getImageConfig($imageType, $size, $property)
+	public function getImageConfig($imageType, $size, $property)
 	{
-		$config = 'laravel-blog::images.' . $imageType . '.';
+		$config = $this->getConfigPrefix().'images.' . $imageType . '.';
 		if ($size == 'original')
 		{
 			$config .= 'original.';
@@ -245,7 +254,7 @@ class Post extends \Eloquent {
 	 */
 	public function getYouTubeThumbnailImage()
 	{
-		return str_replace('%YOU_TUBE_VIDEO_ID%', $this->you_tube_video_id, \Config::get('laravel-blog::you_tube.thumbnail_code'));
+		return str_replace('%YOU_TUBE_VIDEO_ID%', $this->you_tube_video_id, \Config::get($this->getConfigPrefix().'you_tube.thumbnail_code'));
 	}
 
 	/**
@@ -255,7 +264,7 @@ class Post extends \Eloquent {
 	 */
 	public function getYouTubeEmbedCode()
 	{
-		return str_replace('%YOU_TUBE_VIDEO_ID%', $this->you_tube_video_id, \Config::get('laravel-blog::you_tube.embed_code'));
+		return str_replace('%YOU_TUBE_VIDEO_ID%', $this->you_tube_video_id, \Config::get($this->getConfigPrefix().'you_tube.embed_code'));
 	}
 
 	/**
@@ -264,7 +273,7 @@ class Post extends \Eloquent {
 	 */
 	public function getDate()
 	{
-		return date(\Config::get('laravel-blog::views.published_date_format'), strtotime($this->published_date));
+		return date(\Config::get($this->getConfigPrefix().'views.published_date_format'), strtotime($this->published_date));
 	}
 
 	/**
@@ -302,6 +311,27 @@ class Post extends \Eloquent {
 			->orderBy('published_date', 'desc')
 			->orderBy('id', 'desc')
 			->first();
+	}
+
+	/**
+	 * Returns the config prefix
+	 *
+	 * @return string
+	 */
+	public function getConfigPrefix()
+	{
+		return $this->configPrefix;
+	}
+
+	/**
+	 * Sets the config prefix string
+	 *
+	 * @param $configBase string
+	 * @return string
+	 */
+	public function setConfigPrefix($configBase)
+	{
+		return $this->configPrefix = $configBase;
 	}
 
 }
