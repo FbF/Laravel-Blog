@@ -134,7 +134,7 @@ class Post extends \Eloquent {
 		$html = '<img src="' . $this->getImageSrc($type, $size) . '"';
 		$html .= ' alt="' . $this->{$type.'_alt'} . '"';
 		$html .= ' width="' . $this->getImageWidth($type, $size) . '"';
-		$html .= ' height="' . $this->getImageWidth($type, $size) . '" />';
+		$html .= ' height="' . $this->getImageHeight($type, $size) . '" />';
 		return $html;
 	}
 
