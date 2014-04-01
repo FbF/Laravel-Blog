@@ -265,3 +265,7 @@ change the `'relationship_uri_prefix'` value from false to `'category'`.
 
 Once you've created some categories and assigned some posts to them, you can filter the posts by visiting a URL like
 `http://domain.com/blog/category/my-category`.
+
+### Need comments?
+
+Have a look at https://github.com/FbF/Laravel-Comments
