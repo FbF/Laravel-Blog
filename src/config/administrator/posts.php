@@ -121,7 +121,7 @@ return array(
 			'title' => 'In RSS Feed?',
 			'type' => 'bool',
 		),
-		'meta_description' => array(
+		'page_title' => array(
 			'title' => 'Page Title',
 			'type' => 'text',
 		),
