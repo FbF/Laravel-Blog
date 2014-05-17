@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-	{{ $post->page_title }}
+	{{ !empty($post->page_title) ? $post->page_title : 'Blog &middot; '.$post->title }}
 @endsection
 
 @section('meta_description')
