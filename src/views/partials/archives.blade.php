@@ -5,7 +5,7 @@
 				<ul>
 					@foreach ($months as $monthNumber => $month)
 						<li class="archives--month{{ isset($selectedYear) && $year == $selectedYear && isset($selectedMonth) && $monthNumber == $selectedMonth ? ' archives--month__active' : '' }}">
-							<a href="{{ action('Fbf\LaravelBlog\PostsController@index', array('year' => $year, 'month' => $monthNumber)) }}">
+							<a href="{{ action('Fbf\LaravelBlog\PostsController@indexByYearMonth', array('year' => $year, 'month' => $monthNumber)) }}">
 								{{ $month['monthname'] }} ({{ $month['count'] }})
 							</a>
 						</li>
