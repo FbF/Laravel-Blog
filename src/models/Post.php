@@ -1,7 +1,12 @@
 <?php namespace Fbf\LaravelBlog;
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class Post extends \Eloquent {
 
+	use SoftDeletingTrait;
+	protected $dates = ['deleted_at'];
+	
 	/**
 	 * Status values for the database
 	 */
