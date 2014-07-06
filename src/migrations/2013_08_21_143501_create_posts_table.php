@@ -29,7 +29,8 @@ class CreatePostsTable extends Migration {
 	        $table->text('meta_description');
 	        $table->text('meta_keywords');
             $table->enum('status', array('DRAFT', 'APPROVED'))->default('DRAFT');
-	        $table->dateTime('published_date')->nullable();
+	        $table->dateTime('published_date')->nullable
+	        $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
 	}
