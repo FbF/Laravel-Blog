@@ -125,7 +125,7 @@ class Post extends \Eloquent {
 	 * @param $size
 	 * @return null|string
 	 */
-	public function getImage($type, $size)
+	public function getImage($type, $size, array $attributes = [])
 	{
 		if (empty($this->$type))
 		{
@@ -134,7 +134,19 @@ class Post extends \Eloquent {
 		$html = '<img src="' . $this->getImageSrc($type, $size) . '"';
 		$html .= ' alt="' . $this->{$type.'_alt'} . '"';
 		$html .= ' width="' . $this->getImageWidth($type, $size) . '"';
-		$html .= ' height="' . $this->getImageHeight($type, $size) . '" />';
+		$html .= ' height="' . $this->getImageHeight($type, $size) . '"';
+		
+		$html_attributes = '';
+		if (!empty($attributes)) {
+			$html_attributes = join(' ', array_map(function($key) use ($attributes) {
+				if(is_bool($attributes[$key]))
+				{
+					return $attributes[$key] ? $key : '';
+				}
+				return "{$key}=\"{$attributes[$key]}\"";
+			}, array_keys($attributes)));
+		}
+		
 		return $html;
 	}
 
