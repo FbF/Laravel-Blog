@@ -125,7 +125,7 @@ class Post extends \Eloquent {
 	 * @param $size
 	 * @return null|string
 	 */
-	public function getImage($type, $size, array $attributes = [])
+	public function getImage($type, $size, array $attributes = array())
 	{
 		if (empty($this->$type))
 		{
