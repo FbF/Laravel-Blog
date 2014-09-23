@@ -151,6 +151,8 @@ class Post extends \Eloquent {
 				return "{$key}=\"{$attributes[$key]}\"";
 			}, array_keys($attributes)));
 		}
+
+		$html .= $html_attributes . '>';
 		
 		return $html;
 	}
