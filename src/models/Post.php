@@ -139,7 +139,7 @@ class Post extends \Eloquent {
 		$html = '<img src="' . $this->getImageSrc($type, $size) . '"';
 		$html .= ' alt="' . $this->{$type.'_alt'} . '"';
 		$html .= ' width="' . $this->getImageWidth($type, $size) . '"';
-		$html .= ' height="' . $this->getImageHeight($type, $size) . '"';
+		$html .= ' height="' . $this->getImageHeight($type, $size) . '" ';
 		
 		$html_attributes = '';
 		if (!empty($attributes)) {
@@ -152,7 +152,7 @@ class Post extends \Eloquent {
 			}, array_keys($attributes)));
 		}
 		
-		return $html;
+		return $html . $html_attributes . ' />';
 	}
 
 	/**
