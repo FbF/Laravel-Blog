@@ -2,11 +2,11 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class Post extends \Eloquent {
+class Post extends \NestedSet {
 
 	use SoftDeletingTrait;
 	protected $dates = ['deleted_at'];
-	
+
 	/**
 	 * Status values for the database
 	 */
@@ -140,7 +140,7 @@ class Post extends \Eloquent {
 		$html .= ' alt="' . $this->{$type.'_alt'} . '"';
 		$html .= ' width="' . $this->getImageWidth($type, $size) . '"';
 		$html .= ' height="' . $this->getImageHeight($type, $size) . '"';
-		
+
 		$html_attributes = '';
 		if (!empty($attributes)) {
 			$html_attributes = join(' ', array_map(function($key) use ($attributes) {
@@ -151,7 +151,7 @@ class Post extends \Eloquent {
 				return "{$key}=\"{$attributes[$key]}\"";
 			}, array_keys($attributes)));
 		}
-		
+
 		return $html;
 	}
 

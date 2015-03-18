@@ -22,6 +22,7 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected posts
 		$posts = $this->post->live()
+		    ->currentLanguage()
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
 			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
