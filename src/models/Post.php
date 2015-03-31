@@ -46,10 +46,9 @@ class Post extends \NestedSet {
 	 * @param $query
 	 * @return mixed
 	 */
-	public function scopeLive($query)
+	public function scopePublished($query)
 	{
-		return $query->where($this->getTable().'.status', '=', Post::APPROVED)
-			->where($this->getTable().'.published_date', '<=', \Carbon\Carbon::now());
+		return $query->where($this->getTable().'.published_date', '<=', \Carbon\Carbon::now());
 	}
 
 	/**
@@ -88,6 +87,8 @@ class Post extends \NestedSet {
 	{
 		// Get the data
 		$archives = self::live()
+		    ->published()
+		    ->currentLanguage()
 			->select(\DB::raw('
 				YEAR(`published_date`) AS `year`,
 				DATE_FORMAT(`published_date`, "%m") AS `month`,
@@ -309,7 +310,7 @@ class Post extends \NestedSet {
 	 */
 	public function getUrl()
 	{
-		return \URL::action('Fbf\LaravelBlog\PostsController@view', array('slug' => $this->slug));
+		return \URL::route('news_detail', array('slug' => $this->slug));
 	}
 
 	/**
@@ -328,10 +329,14 @@ class Post extends \NestedSet {
 	public function newer()
 	{
 		return $this->live()
+		    ->published()
+		    ->currentLanguage()
 			->where('published_date', '>=', $this->published_date)
-			->where('id', '<>', $this->id)
+			->where($this->getTable().'.id', '<>', $this->id)
+			->where('lft', '<', $this->lft)
+
 			->orderBy('published_date', 'asc')
-			->orderBy('id', 'asc')
+			->orderBy($this->getTable().'.lft', 'asc')
 			->first();
 	}
 
@@ -342,10 +347,13 @@ class Post extends \NestedSet {
 	public function older()
 	{
 		return $this->live()
+		    ->published()
+		    ->currentLanguage()
 			->where('published_date', '<=', $this->published_date)
-			->where('id', '<>', $this->id)
+			->where($this->getTable().'.id', '<>', $this->id)
+			->where('lft', '>', $this->lft)
 			->orderBy('published_date', 'desc')
-			->orderBy('id', 'desc')
+			->orderBy($this->getTable().'.lft', 'desc')
 			->first();
 	}
 

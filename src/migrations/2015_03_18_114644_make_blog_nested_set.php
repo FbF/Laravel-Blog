@@ -24,6 +24,8 @@ class MakeBlogNestedSet extends Migration {
 			$table->index('parent_id');
 			$table->index('lft');
 			$table->index('rgt');
+
+			$table->unique(['slug', 'language_id']);
         });
 	}
 
@@ -46,6 +48,8 @@ class MakeBlogNestedSet extends Migration {
 			$table->dropIndex('parent_id');
 			$table->dropIndex('lft');
 			$table->dropIndex('rgt');
+
+			$table->dropUnique(['slug', 'language_id']);
         });
 	}
 }

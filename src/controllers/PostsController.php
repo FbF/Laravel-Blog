@@ -22,6 +22,7 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected posts
 		$posts = $this->post->live()
+		    ->published()
 		    ->currentLanguage()
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
@@ -45,6 +46,8 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected posts
 		$posts = $this->post->live()
+		    ->published()
+		    ->currentLanguage()
 			->byYearMonth($selectedYear, $selectedMonth)
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
@@ -67,6 +70,8 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected posts
 		$posts = $this->post->live()
+		    ->published()
+		    ->currentLanguage()
 			->byRelationship($relationshipIdentifier)
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
@@ -89,6 +94,8 @@ class PostsController extends \BaseController {
 	{
 		// Get the selected post
 		$post = $this->post->live()
+		    ->published()
+		    ->currentLanguage()
 			->where($this->post->getTable().'.slug', '=', $slug)
 			->firstOrFail();
 
@@ -100,6 +107,7 @@ class PostsController extends \BaseController {
 			$older = $post->older();
 		}
 
+        $archives = false;
 		// Get the archives data if the config says to show the archives on the view page
 		if (\Config::get('laravel-blog::views.view_page.show_archives'))
 		{
