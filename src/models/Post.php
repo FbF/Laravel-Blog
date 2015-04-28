@@ -4,7 +4,6 @@ use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Post extends \NestedSet {
 
-	use SoftDeletingTrait;
 	protected $dates = ['deleted_at'];
 
 	/**
