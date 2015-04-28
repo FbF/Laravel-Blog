@@ -26,14 +26,12 @@ class LaravelBlogServiceProvider extends ServiceProvider {
 		}
 
 		\App::register('Thujohn\Rss\RssServiceProvider');
-		\App::register('Cviebrock\EloquentSluggable\SluggableServiceProvider');
 
 		// Shortcut so developers don't need to add an Alias in app/config/app.php
 		$this->app->booting(function()
 		{
 			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
 			$loader->alias('Fbf\LaravelBlog\Rss', 'Thujohn\Rss\RssFacade');
-			$loader->alias('Sluggable', 'Cviebrock\EloquentSluggable\Facades\Sluggable');
 		});
 
 	}

@@ -28,18 +28,6 @@ class Post extends \NestedSet {
 	protected $configPrefix = 'laravel-blog::';
 
 	/**
-	 * Used for Cviebrock/EloquentSluggable
-	 * @var array
-	 */
-	public static $sluggable = array(
-		'build_from' => 'title',
-		'save_to' => 'slug',
-		'separator' => '-',
-		'unique' => true,
-		'include_trashed' => true,
-	);
-
-	/**
 	 * Query scope for "live" posts, adds conditions for status = APPROVED and published date is in the past
 	 *
 	 * @param $query
