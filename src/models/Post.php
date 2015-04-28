@@ -1,7 +1,5 @@
 <?php namespace Fbf\LaravelBlog;
 
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
-
 class Post extends \NestedSet {
 
 	protected $dates = ['deleted_at'];
