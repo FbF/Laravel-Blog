@@ -20,7 +20,7 @@ class LaravelBlogServiceProvider extends ServiceProvider {
 	{
 		$this->package('fbf/laravel-blog');
 
-		if (\Config::get('laravel-blog::routes.use_package_routes', true))
+		if (\Config::get('laravel-blog.routes.use_package_routes', true))
 		{
 			include __DIR__.'/../../routes.php';
 		}

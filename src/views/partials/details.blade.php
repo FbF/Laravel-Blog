@@ -18,7 +18,7 @@
 		{{ $post->summary }}
 	</div>
 
-	@if (Config::get('laravel-blog::views.view_page.show_share_partial'))
+	@if (Config::get('laravel-blog.views.view_page.show_share_partial'))
 		@include('laravel-blog::partials.share')
 	@endif
 
@@ -34,7 +34,7 @@
 
 	{{ $post->content }}
 
-	@if (Config::get('laravel-blog::link.show') && !empty($post->link_url) && !empty($post->link_text))
+	@if (Config::get('laravel-blog.link.show') && !empty($post->link_url) && !empty($post->link_text))
 		<p class="item--external-link">
 			<a href="{{ $post->link_url }}">
 				{{ $post->link_text }}
@@ -44,6 +44,6 @@
 
 </div>
 
-@if (Config::get('laravel-blog::views.view_page.show_adjacent_items') && ($newer || $older))
+@if (Config::get('laravel-blog.views.view_page.show_adjacent_items') && ($newer || $older))
 	@include('laravel-blog::partials.adjacent')
 @endif

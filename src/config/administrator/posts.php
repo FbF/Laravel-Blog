@@ -66,21 +66,21 @@ return array(
 			'title' => 'Main Image',
 			'type' => 'image',
 			'naming' => 'random',
-			'location' => public_path() . Config::get('laravel-blog::images.main_image.original.dir'),
+			'location' => public_path() . Config::get('laravel-blog.images.main_image.original.dir'),
 			'size_limit' => 5,
 			'sizes' => array(
 				array(
-					Config::get('laravel-blog::images.main_image.sizes.thumbnail.width'),
-					Config::get('laravel-blog::images.main_image.sizes.thumbnail.height'),
-					Config::get('laravel-blog::images.main_image.sizes.thumbnail.method'),
-					public_path() . Config::get('laravel-blog::images.main_image.sizes.thumbnail.dir'),
+					Config::get('laravel-blog.images.main_image.sizes.thumbnail.width'),
+					Config::get('laravel-blog.images.main_image.sizes.thumbnail.height'),
+					Config::get('laravel-blog.images.main_image.sizes.thumbnail.method'),
+					public_path() . Config::get('laravel-blog.images.main_image.sizes.thumbnail.dir'),
 					100
 				),
 				array(
-					Config::get('laravel-blog::images.main_image.sizes.resized.width'),
-					Config::get('laravel-blog::images.main_image.sizes.resized.height'),
-					Config::get('laravel-blog::images.main_image.sizes.resized.method'),
-					public_path() . Config::get('laravel-blog::images.main_image.sizes.resized.dir'),
+					Config::get('laravel-blog.images.main_image.sizes.resized.width'),
+					Config::get('laravel-blog.images.main_image.sizes.resized.height'),
+					Config::get('laravel-blog.images.main_image.sizes.resized.method'),
+					public_path() . Config::get('laravel-blog.images.main_image.sizes.resized.dir'),
 					100
 				),
 			),
@@ -106,12 +106,12 @@ return array(
 		'link_text' => array(
 			'title' => 'Link Text',
 			'type' => 'text',
-			'visible' => Config::get('laravel-blog::link.show'),
+			'visible' => Config::get('laravel-blog.link.show'),
 		),
 		'link_url' => array(
 			'title' => 'Link URL',
 			'type' => 'text',
-			'visible' => Config::get('laravel-blog::link.show'),
+			'visible' => Config::get('laravel-blog.link.show'),
 		),
 		'is_sticky' => array(
 			'title' => 'Is sticky?',

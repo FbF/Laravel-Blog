@@ -10,7 +10,7 @@ class PostTableFakeSeeder extends \Seeder {
 
 		$this->faker = \Faker\Factory::create();
 
-		$numberToCreate = \Config::get('laravel-blog::seed.number');
+		$numberToCreate = \Config::get('laravel-blog.seed.number');
 
 		for ($i = 0; $i < $numberToCreate; $i++)
 		{
@@ -22,7 +22,7 @@ class PostTableFakeSeeder extends \Seeder {
 
 	protected function truncate()
 	{
-		$replace = \Config::get('laravel-blog::seed.replace');
+		$replace = \Config::get('laravel-blog.seed.replace');
 		if ($replace)
 		{
 			\DB::table('fbf_blog_posts')->delete();
@@ -67,31 +67,31 @@ class PostTableFakeSeeder extends \Seeder {
 
 	protected function hasYouTubeVideos()
 	{
-		$youTubeVideoFreq = \Config::get('laravel-blog::seed.you_tube.freq');
+		$youTubeVideoFreq = \Config::get('laravel-blog.seed.you_tube.freq');
 		$hasYouTubeVideos = $youTubeVideoFreq > 0 && rand(1, $youTubeVideoFreq) == $youTubeVideoFreq;
 		return $hasYouTubeVideos;
 	}
 
 	protected function setYouTubeVideoId()
 	{
-		$this->post->you_tube_video_id = $this->faker->randomElement(\Config::get('laravel-blog::seed.you_tube.video_ids'));
+		$this->post->you_tube_video_id = $this->faker->randomElement(\Config::get('laravel-blog.seed.you_tube.video_ids'));
 	}
 
 	protected function hasMainImage()
 	{
-		$mainImageFreq = \Config::get('laravel-blog::seed.images.main_image.freq');
+		$mainImageFreq = \Config::get('laravel-blog.seed.images.main_image.freq');
 		$hasMainImage = $mainImageFreq > 0 && rand(1, $mainImageFreq) == $mainImageFreq;
 		return $hasMainImage;
 	}
 
 	protected function doMainImage()
 	{
-		$imageOptions = \Config::get('laravel-blog::images.main_image');
+		$imageOptions = \Config::get('laravel-blog.images.main_image');
 		if (!$imageOptions['show'])
 		{
 			return false;
 		}
-		$seedOptions = \Config::get('laravel-blog::seed.images.main_image');
+		$seedOptions = \Config::get('laravel-blog.seed.images.main_image');
 		$original = $this->faker->image(
 			public_path($imageOptions['original']['dir']),
 			$seedOptions['original_width'],
@@ -133,25 +133,25 @@ class PostTableFakeSeeder extends \Seeder {
 
 	protected function hasLink()
 	{
-		$showLink =  \Config::get('laravel-blog::link.show');
+		$showLink =  \Config::get('laravel-blog.link.show');
 		if (!$showLink)
 		{
 			return false;
 		}
-		$linkFreq = \Config::get('laravel-blog::seed.link.freq');
+		$linkFreq = \Config::get('laravel-blog.seed.link.freq');
 		$hasLink = $linkFreq > 0 && rand(1, $linkFreq) == $linkFreq;
 		return $hasLink;
 	}
 
 	protected function setLinkText()
 	{
-		$linkTexts = \Config::get('laravel-blog::seed.link.texts');
+		$linkTexts = \Config::get('laravel-blog.seed.link.texts');
 		$this->post->link_text = $this->faker->randomElement($linkTexts);
 	}
 
 	protected function setLinkUrl()
 	{
-		$linkUrls = \Config::get('laravel-blog::seed.link.urls');
+		$linkUrls = \Config::get('laravel-blog.seed.link.urls');
 		$this->post->link_url = $this->faker->randomElement($linkUrls);
 	}
 

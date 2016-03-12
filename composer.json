@@ -1,6 +1,6 @@
 {
     "name": "fbf/laravel-blog",
-    "description": "A Laravel 4 package to add a simple blog to a site",
+    "description": "A Laravel 5 package to add a simple multilingual blog to a site",
     "keywords": ["laravel","blog"],
     "license": "MIT",
     "authors": [
@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "illuminate/support": "4.*",
-        "thujohn/rss": "1.0.*",
+        "php": ">=5.6.0",
+        "illuminate/support": "5.*",
+        "mayconbordin/rss-l5": "~1.1",
         "fzaninotto/faker": "1.4.*"
     },
     "autoload": {

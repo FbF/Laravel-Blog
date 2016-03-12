@@ -1,6 +1,6 @@
 <?php namespace Fbf\LaravelBlog;
 
-class PostsController extends \BaseController {
+class PostsController extends \App\Http\Controllers\Controller {
 
 	/**
 	 * @var \Fbf\LaravelBlog\Post
@@ -26,15 +26,15 @@ class PostsController extends \BaseController {
 		    ->currentLanguage()
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
-			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
+			->paginate(\Config::get('laravel-blog.views.index_page.results_per_page'));
 
 		// Get the archives data if the config says to show the archives on the index page
-		if (\Config::get('laravel-blog::views.index_page.show_archives'))
+		if (\Config::get('laravel-blog.views.index_page.show_archives'))
 		{
 			$archives = $this->post->archives();
 		}
 
-		return \View::make(\Config::get('laravel-blog::views.index_page.view'), compact('posts', 'archives'));
+		return view(\Config::get('laravel-blog.views.index_page.view'), compact('posts', 'archives'));
 	}
 
 	/**
@@ -51,15 +51,15 @@ class PostsController extends \BaseController {
 			->byYearMonth($selectedYear, $selectedMonth)
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
-			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
+			->paginate(\Config::get('laravel-blog.views.index_page.results_per_page'));
 
 		// Get the archives data if the config says to show the archives on the index page
-		if (\Config::get('laravel-blog::views.index_page.show_archives'))
+		if (\Config::get('laravel-blog.views.index_page.show_archives'))
 		{
 			$archives = $this->post->archives();
 		}
 
-		return \View::make(\Config::get('laravel-blog::views.index_page.view'), compact('posts', 'selectedYear', 'selectedMonth', 'archives'));
+		return view(\Config::get('laravel-blog.views.index_page.view'), compact('posts', 'selectedYear', 'selectedMonth', 'archives'));
 	}
 
 	/**
@@ -75,15 +75,15 @@ class PostsController extends \BaseController {
 			->byRelationship($relationshipIdentifier)
 			->orderBy($this->post->getTable().'.is_sticky', 'desc')
 			->orderBy($this->post->getTable().'.published_date', 'desc')
-			->paginate(\Config::get('laravel-blog::views.index_page.results_per_page'));
+			->paginate(\Config::get('laravel-blog.views.index_page.results_per_page'));
 
 		// Get the archives data if the config says to show the archives on the index page
-		if (\Config::get('laravel-blog::views.index_page.show_archives'))
+		if (\Config::get('laravel-blog.views.index_page.show_archives'))
 		{
 			$archives = $this->post->archives();
 		}
 
-		return \View::make(\Config::get('laravel-blog::views.index_page.view'), compact('posts', 'archives'));
+		return view(\Config::get('laravel-blog.views.index_page.view'), compact('posts', 'archives'));
 	}
 
 	/**
@@ -101,7 +101,7 @@ class PostsController extends \BaseController {
 
 		// Get the next newest and next oldest post if the config says to show these links on the view page
 		$newer = $older = false;
-		if (\Config::get('laravel-blog::views.view_page.show_adjacent_items'))
+		if (\Config::get('laravel-blog.views.view_page.show_adjacent_items'))
 		{
 			$newer = $post->newer();
 			$older = $post->older();
@@ -109,12 +109,12 @@ class PostsController extends \BaseController {
 
         $archives = false;
 		// Get the archives data if the config says to show the archives on the view page
-		if (\Config::get('laravel-blog::views.view_page.show_archives'))
+		if (\Config::get('laravel-blog.views.view_page.show_archives'))
 		{
 			$archives = $this->post->archives();
 		}
 
-		return \View::make(\Config::get('laravel-blog::views.view_page.view'), compact('post', 'newer', 'older', 'archives'));
+		return view(\Config::get('laravel-blog.views.view_page.view'), compact('post', 'newer', 'older', 'archives'));
 
 	}
 
@@ -125,8 +125,8 @@ class PostsController extends \BaseController {
 	{
 		$feed = Rss::feed('2.0', 'UTF-8');
 		$feed->channel(array(
-			'title' => \Config::get('laravel-blog::meta.rss_feed.title'),
-			'description' => \Config::get('laravel-blog::meta.rss_feed.description'),
+			'title' => \Config::get('laravel-blog.meta.rss_feed.title'),
+			'description' => \Config::get('laravel-blog.meta.rss_feed.description'),
 			'link' => \URL::current(),
 		));
 		$posts = $this->post->live()
@@ -138,7 +138,7 @@ class PostsController extends \BaseController {
 			$feed->item(array(
 				'title' => $post->title,
 				'description' => $post->summary,
-				'link' => \URL::action('Fbf\LaravelBlog\PostsController@view', array('slug' => $post->slug)),
+				'link' => \URL::action('\Fbf\LaravelBlog\PostsController@view', array('slug' => $post->slug)),
 			));
 		}
 		return \Response::make($feed, 200, array('Content-Type', 'application/rss+xml'));
