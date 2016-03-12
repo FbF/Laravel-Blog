@@ -1,6 +1,6 @@
 <?php namespace Fbf\LaravelBlog;
 
-class Post extends \NestedSet {
+class Post extends \App\Models\NestedSet {
 
 	protected $dates = ['deleted_at'];
 
